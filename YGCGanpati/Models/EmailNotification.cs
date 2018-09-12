@@ -70,7 +70,7 @@ namespace YGCGanpati.Models
             Subject = "Reset Password";
             Body = System.IO.File.ReadAllText(HttpContext.Current.Server.MapPath("~/Template/ForgetPassword.html"));
             Body = Body.Replace("{{Name}}", user.Name)
-                .Replace("{{UserID}}", user.Name)
+                .Replace("{{UserID}}", user.UserName)
                 .Replace("{{Password}}", Password);                
             MailMessage msg = CreateMessage();
             if (!String.IsNullOrEmpty(user.Email))
