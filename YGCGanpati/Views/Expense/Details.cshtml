@@ -1,0 +1,70 @@
+﻿@model YGCGanpati.Models.Expense
+
+@{
+    ViewBag.Title = "Expense Details";
+}
+
+<h2>Expense Details</h2>
+
+<div>    
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ExpenseDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExpenseDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ExpenseAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExpenseAmount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ExpenseName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExpenseName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Details)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Details)
+        </dd>
+@if (User.IsInRole("Admin") | User.IsInRole("Manager"))
+{
+    <dt>
+        Expense By
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.UserProfile.Name)
+    </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifiedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedDate)
+        </dd>
+}
+    </dl>
+</div>
+<p>    
+    @Html.ActionLink("Back to List", "Index")
+</p>

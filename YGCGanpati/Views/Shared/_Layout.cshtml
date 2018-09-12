@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Yashraj Green Castle</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/font")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("YGC Ganpati Festival 2018", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="@Url.Action("Index", "Home")"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                    <li><a href="@Url.Action("Index", "Event")"><span class="glyphicon glyphicon-calendar"></span> Events</a></li>
+                    <li><a href="@Url.Action("Index","Collection")"><span class="glyphicon glyphicon-check"></span> Collection</a></li>
+                    <li><a href="@Url.Action("Index","Expense")"><span class="glyphicon glyphicon-share"></span> Expense</a></li>
+                    <li><a href="@Url.Action("Index","Sponser")"><span class="glyphicon glyphicon-piggy-bank"></span> Sponser</a></li>
+                    <li><a href="@Url.Action("Users","Manage")"><span class="glyphicon glyphicon-user"></span> Members</a></li>
+                    <li><a href="@Url.Action("App","Download")"><span class="glyphicon glyphicon glyphicon-phone"></span> App</a></li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        @*<footer>
+            <p>&copy; @DateTime.Now.Year - Yashraj Green Castle Ganpati Festival</p>
+        </footer>*@
+        <footer>
+            <div>
+                &copy; @DateTime.Now.Year - Yashraj Green Castle
+                <div class="pull-right">
+                    <a href="https://www.facebook.com/groups/640074993021292/" target="_blank"><i class="fa fa-facebook-square fa-lg orange" style="color:#e95420"></i></a> &nbsp;
+                    <a href="mailto:YashrajGreenCastle@gmail.com" target="_blank"><i class="fa fa-envelope-square fa-lg" style="color:#e95420"></i></a> &nbsp;
+                    <a href="https://goo.gl/maps/11Aru5y8UHw" target="_blank"><i class="fa fa-map fa-lg" style="color:#e95420"></i></a> &nbsp;
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script type="text/javascript">
+    if (navigator.userAgent.indexOf('Chrome') != -1) {
+        if (!Modernizr.inputtypes['date']) {
+            $('input[type=date]').datepicker({
+                dateFormat: 'yy-mm-dd'
+            });
+        }
+    }
+    $('input[type="date"]').attr('type', 'text');
+
+
+$("#search").keyup(function () {
+    var value = this.value.toLowerCase().trim();
+
+    $(".table tr").each(function (index) {
+        if (!index) {
+calculate();
+return;
+}
+        $(this).find("td").each(function () {
+            var id = $(this).text().toLowerCase().trim();
+            var not_found = (id.indexOf(value) == -1);
+            $(this).closest('tr').toggle(!not_found);
+            return not_found;
+        });
+    });
+calculate();
+});
+
+$("#filters").change(function () {
+    var value = this.value.toLowerCase().trim();
+    //alert(value);
+    $(".table tr").each(function (index) {
+        if (!index) {
+calculate();
+return;
+}
+        $(this).find("td").each(function () {
+            var id = $(this).text().toLowerCase().trim();
+            var not_found = (id.indexOf(value) == -1);
+            $(this).closest('tr').toggle(!not_found);
+            return not_found;
+        });
+    });
+calculate();
+});
+
+function calculate()
+{
+$('#total').text('0.00');
+var result = [];
+  $('.table tbody tr').each(function(){
+  	if($(this).css('display') != 'none' )
+  	$('td', this).each(function(index, val){
+    if(!result[index]) result[index] = 0;    	       
+      	result[index] += parseInt($(val).text());      
+    });
+  });
+  
+  $('#total').text(result[2]);  
+}
+
+    </script>
+</body>
+</html>

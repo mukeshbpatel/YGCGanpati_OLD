@@ -1,0 +1,85 @@
+﻿@model IEnumerable<YGCGanpati.Models.Collection>
+
+@{
+    ViewBag.Title = "Collection";
+}
+
+<h2><i class="glyphicon glyphicon-check"></i> @ViewBag.Title</h2>
+
+@if (User.IsInRole("Admin") | User.IsInRole("Manager"))
+{
+    <div class="pull-right">
+      &nbsp;  <a href="@Url.Action("Create")"><span class="glyphicon glyphicon-plus"></span> Add New</a>
+    </div>
+}
+
+<div class="pull-right form-inline">
+    <select class="form-control input-sm" id="filters">
+        <option value="">Wing</option>
+        <option value="(A">A</option>
+        <option value="(B">B</option>
+        <option value="(C">C</option>
+        <option value="(D">D</option>
+        <option value="(E">E</option>
+        <option value="(F">F</option>
+        <option value="(G">G</option>
+        <option value="(H">H</option>
+        <option value="(I">I</option>
+        <option value="(J">J</option>
+        <option value="(K">K</option>
+       <option value="(S">S</option>
+    </select>
+    <input type="text" id="search" class="form-control input-sm" placeholder="search.." />
+</div>
+
+<table id="tbl" class="table table-sm table-hover table-condensed table-bordered">
+  <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CollectionDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            @if (User.IsInRole("Admin") | User.IsInRole("Manager"))
+            {
+                <th></th>
+            }
+        </tr>
+<thead>
+ <tbody>  
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="ICapital">
+                    @Html.DisplayFor(modelItem => item.Name)
+                    (@Html.DisplayFor(modelItem => item.FlatNo))
+                </td>
+                <td data-order="@item.CollectionDate.ToString("yyMMdd")">
+                    @Html.DisplayFor(modelItem => item.CollectionDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                @if (User.IsInRole("Admin") | User.IsInRole("Manager"))
+                {
+                <td>
+                    <a href="@Url.Action("Details", new { id = item.CollectionID })"><span class="glyphicon glyphicon-info-sign"></span></a>
+                    <a href="@Url.Action("Edit", new { id = item.CollectionID })"><span class="glyphicon glyphicon-edit"></span></a>
+                    <a href="@Url.Action("Delete", new { id = item.CollectionID })"><span class="glyphicon glyphicon-remove"></span></a>
+                </td>
+                }
+            </tr>
+        }
+</tbody>
+<tfoot>
+  <tr>
+<th>Total</th>
+<th></th>
+<th id="total">@Model.Sum(s=>s.Amount)</th>
+  </tr>
+</tfoot>
+</table>

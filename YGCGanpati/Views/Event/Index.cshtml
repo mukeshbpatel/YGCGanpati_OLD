@@ -1,0 +1,57 @@
+﻿@model IEnumerable<YGCGanpati.Models.Event>
+
+@{
+    ViewBag.Title = "Events";
+}
+
+<h2><i class="glyphicon glyphicon-calendar"></i> @ViewBag.Title</h2>
+
+@if (User.IsInRole("Admin") | User.IsInRole("Manager"))
+{
+    <div class="pull-right">
+        &nbsp;  <a href="@Url.Action("Create")"><span class="glyphicon glyphicon-plus"></span> Add New</a>
+    </div>
+}
+<table id="tbl" class="table table-sm table-hover table-condensed table-bordered">
+   
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EventDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventName)
+            </th>
+            @if (User.IsInRole("Admin") | User.IsInRole("Manager"))
+            {
+                <th></th>
+            }
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <span class="glyphicon glyphicon-calendar"> <b>@Html.DisplayFor(modelItem => item.EventDate)</b></span>
+                </td>
+                <td>
+                    @{
+                        string[] lines = item.EventName.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
+                        foreach (string m in lines)
+                        {
+                            <span>@m</span><br />
+                        }
+                    }
+                </td>
+                @if (User.IsInRole("Admin") | User.IsInRole("Manager"))
+                {
+                    <td>
+                        <a href="@Url.Action("Details", new { id = item.EventID })"><span class="glyphicon glyphicon-info-sign"></span></a>
+                        <a href="@Url.Action("Edit", new { id = item.EventID })"><span class="glyphicon glyphicon-edit"></span></a>
+                        <a href="@Url.Action("Delete", new { id = item.EventID })"><span class="glyphicon glyphicon-remove"></span></a>
+                    </td>
+                }
+            </tr>
+                        }
+
+
+</table>

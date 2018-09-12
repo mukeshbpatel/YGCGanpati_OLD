@@ -1,0 +1,121 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 10px;	
+    font-family: arial,sans-serif;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 5px;
+    padding-right:5px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space:nowrap;
+   
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+    font-family: arial,sans-serif;
+}
+
+textarea {
+    width:90%;
+    height:150px;
+    border: 1px solid #ccc;
+    border-radius:4px;
+    padding:6px;
+}
+
+@media only screen and (max-width: 800px) {
+    .table {
+        font-size: 75%;
+    }
+}
+
+h2 {
+font-size:medium;
+font-weight:bold;
+}
+
+.ICapital {
+    text-transform:capitalize;
+}
+
+.Capital {
+    text-transform:uppercase;
+}
+
+
+.navbar-inverse{
+    background-color:#e95420 !important;
+    border-color:bisque;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color:white;
+}
+
+.navbar-inverse .navbar-brand {
+    color:white;
+}
+
+.btn-primary {
+    background-color:#e95420;
+    border-color:#e95420;
+}
+
+.btn-primary:hover {
+    background-color:#ce4414;
+    border-color:#c34113;
+}
+
+hr{
+    background-color:#e95420;
+    color:#e95420;
+    border-top:1px solid #e95420;
+}
+
+
+.form-control:focus {
+    border-color:#f4ad94;
+    box-shadow:0px 0px 0px 0.2rem rgba(233,84,32,0.25);
+}
+
+
+#tbl_filter label {
+    font-weight:normal;
+    font-size:14px;
+}
+
+#tbl_filter label input {
+    border:1px solid #ddd;
+    padding:2px;
+    border-radius:4px;
+    font-size:14px;
+	height:20px;
+}
+
+.navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle:hover {
+    background-color:#e95420;
+}
+
+.navbar-inverse .navbar-toggle {
+    border-color:antiquewhite;
+}
+
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+    border-color:antiquewhite;
+}
+
+.col-md-8 {
+    padding-left:25px;
+    padding-right:25px;
+}
