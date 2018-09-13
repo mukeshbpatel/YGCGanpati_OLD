@@ -1,6 +1,4 @@
-﻿@model IEnumerable<YGCGanpati.Models.GraphData>
-
-@{
+﻿@{
     ViewBag.Title = "YGC Ganpati";
 }
 
@@ -9,115 +7,65 @@
     <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
     <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
 </div>*@
+<style>
+    .box {
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Balance Sheet</h2>
-        @{
-            decimal Balance = 0;
-        }
-        <table class="table table-condensed">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.TDate)
-                </th>
-                <th style="text-align:right;" >
-                    @Html.DisplayNameFor(model => model.Collections)
-                </th>
-                <th style="text-align:right;">
-                    @Html.DisplayNameFor(model => model.Expenses)
-                </th>
-                <th style="text-align:right;" >
-                    @Html.DisplayNameFor(model => model.Balance)
-                </th>                
-            </tr>
-            
-            
+    }
 
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td style="text-align:left;">
-                        @Html.DisplayFor(modelItem => item.TDate)
-                    </td>
-                    <td style="text-align:right;">
-                        @Html.DisplayFor(modelItem => item.Collections)
-                    </td>
-                    <td style="text-align:right;">
-                        @Html.DisplayFor(modelItem => item.Expenses)
-                    </td>
-                    <td style="text-align:right;">                        
-                        @{ 
-                            Balance = Balance + item.Collections - item.Expenses;
-                        }
-                        @Balance
-                    </td>
-                </tr>
-            }
-            <tr style="border-bottom:solid 1px silver;">
-                <th>Total</th>
-                <th style="text-align:right;"><a href="@Url.Action("Index","Collection")">@Model.Sum(c => c.Collections)</a></th>
-                <th style="text-align:right;"><a href="@Url.Action("Index","Expense")">@Model.Sum(c => c.Expenses)</a></th>
-                <th style="text-align:right;">@Balance</th>
-            </tr>
-        </table>
+    .box a {
+        text-decoration:none;
+        color:white;
+    }
+</style>
+
+<div class="row box">
+    <div class="col-sm-3 col-xs-6 text-center" style="padding:10px; background-color:#00c0ef; border:solid 1px white;">
+        <a href="@Url.Action("Index","Quiz")">
+            <div><i class="fa fa-question-circle fa-5x"></i></div>
+            <div><b>Quiz</b></div>
+        </a>
+    </div>
+    <div class="col-sm-3 col-xs-6 text-center" style="padding:10px; background-color:#D4AC0D;border:solid 1px white;">
+        <a href="@Url.Action("Winner", "Quiz")">
+            <div><i class="fa fa-gift  fa-5x"></i></div>
+            <div><b>Winner</b></div>
+        </a>
+    </div>
+    <div class="col-sm-3 col-xs-6 text-center" style="padding:10px; background-color:#f39c12; border:solid 1px white;" >
+        <a href="@Url.Action("Index","Event")">
+            <div><i class="fa fa-calendar  fa-5x"></i></div>
+            <div><b>Events</b></div>
+        </a>
+    </div>
+    <div class="col-sm-3 col-xs-6 text-center" style="padding:10px; background-color:#A569BD; border:solid 1px white;">
+        <a href="@Url.Action("Balance","Home")">
+            <div><i class="fa fa-bank  fa-5x"></i></div>
+            <div><b>Account</b></div>
+        </a>
+    </div>
+    <div class="col-sm-3 col-xs-6 text-center bg-success" style="padding:10px; background-color:#00a65a; border:solid 1px white;">
+        <a href="@Url.Action("Index","Collection")">
+            <div><i class="fa fa-check-square  fa-5x"></i></div>
+            <div><b>Collection</b></div>
+        </a>
+    </div>
+    <div class="col-sm-3 col-xs-6 text-center bg-info" style="padding:10px; background-color:#dd4b39; border:solid 1px white;">
+        <a href="@Url.Action("Index","Expense")">
+            <div><i class="fa fa-share  fa-5x"></i></div>
+            <div><b>Expenses</b></div>
+        </a>
+    </div>
+    <div class="col-sm-3 col-xs-6 text-center bg-warning" style="padding:10px;background-color:#5DADE2; border:solid 1px white;">
+        <a href="@Url.Action("Index","Sponser")">
+            <div><i class="fa fa-star fa-5x"></i></div>
+            <div><b>Sponsers</b></div>
+        </a>
+    </div>
+    <div class="col-sm-3 col-xs-6 text-center bg-info" style="padding:10px;background-color:#FF6F00; border:solid 1px white;">
+        <a href="@Url.Action("Users","Manage")">
+            <div><i class="fa fa-users  fa-5x"></i></div>
+            <div><b>Members</b></div>
+        </a>
     </div>
     
-    <div class="col-md-4">
-        <script src="https://code.highcharts.com/highcharts.js"></script>
-        <script src="https://code.highcharts.com/modules/data.js"></script>
-        <script src="https://code.highcharts.com/modules/exporting.js"></script>
-
-        <div id="container" style="margin: 0 auto"></div>
-        <script>
-            var collection = @Model.Sum(c => c.Collections);
-            var expense = @Model.Sum(c => c.Expenses);
-            Highcharts.chart('container', {
-                chart: {
-                    plotBackgroundColor: null,
-                    plotBorderWidth: null,
-                    plotShadow: true,
-                    type: 'pie'
-                },
-                title: {
-                    text: 'Collections vs Expenses',
-                    style: {
-                fontFamily: 'Verdana, sans-serif'					
-            }
-                },                
-                credits: {
-                    enabled: false
-                },
-                tooltip: {
-                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                },
-                plotOptions: {
-                    pie: {
-                        allowPointSelect: false,
-                        cursor: 'pointer',
-                        dataLabels: {
-                            enabled: true,
-                            format: '<b>{point.name}</b>',
-                            style: {
-                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor)
-                            }
-                        }
-                    }
-                },
-                series: [{
-                    name: 'Brands',
-                    colorByPoint: true,
-                    data: [{
-                        name: 'Collections',
-                        y: collection,
-                        color: Highcharts.getOptions().colors[0]
-                    }, {
-                        name: 'Expenses',
-                        y: expense,
-                        color: Highcharts.getOptions().colors[3]
-                    }]                    
-                }]
-            });
-        </script>
-    </div>    
 </div>

@@ -11,9 +11,16 @@ namespace YGCGanpati.Controllers
         // GET: Download
         public ActionResult App()
         {
+            return View();
+        }
+
+        public ActionResult Android()
+        {
             byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath("~/Download/YGC_Ganpati.apk"));
             string fileName = "YGC_Ganpati.apk";
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
+
+
     }
 }

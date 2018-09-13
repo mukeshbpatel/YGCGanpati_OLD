@@ -45,6 +45,23 @@ namespace YGCGanpati.Models
             else
                 return string.Format(CultureInfo.CreateSpecificCulture("hi-IN"), "{0:#,#}", Amount);
         }
+
+        public static string SecondsToTime(Int64 seconds)
+        {
+            try
+            {
+                Int64 second = seconds % 60;
+                seconds = seconds - second;
+                Int64 minte = (Int64)(seconds / 60);
+                Int64 hour = (Int64)(minte / 60);
+                minte = (minte % 60);
+                return hour.ToString("00") + ":" + minte.ToString("00") + ":" + second.ToString("00");
+            } 
+            catch
+            {
+               return "00:00:00";
+            }
+        }
     }
 
     public class YGCEmail

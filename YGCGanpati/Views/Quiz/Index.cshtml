@@ -1,0 +1,79 @@
+﻿@model IEnumerable<YGCGanpati.Models.QuizQuestion>
+
+@{
+    ViewBag.Title = "Ganpati Quiz";
+}
+
+<div style="margin:10px 0px 20px 5px;">
+    <div class="pull-left" style="font-weight:bold; font-size:16px;">@ViewBag.Title</div>
+    <div class="pull-right">
+        <a href="@Url.Action("Winner")"><i class="fa fa-gift"></i> Winner</a>
+    </div>
+</div>
+<br />
+@{
+    DateTime dt = DateTime.MinValue;
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+
+    <div class="form-horizontal">
+        <fieldset>
+            <table class="table table-condensed">
+                @foreach (var item in Model)
+                {
+                    if (item.DisplayDate != dt)
+                    {
+                        <tr>
+                            <td style="width:100px;" class="bg-info">
+                                <span class="glyphicon glyphicon-calendar"></span> Date: @item.DisplayDate.ToShortDateString()
+                        </tr>
+                        dt = item.DisplayDate;
+                    }
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Question)
+                            <ul style="list-style:none;">
+                                <li>
+                                    <input type="radio" id="chk_1_@item.QuestionID" name="radio_@item.QuestionID" value="chk_1" />
+                                    <label for="chk_1_@item.QuestionID" style="font-weight:normal">@item.Option1</label>
+                                </li>
+                                <li>
+                                    <input type="radio" id="chk_2_@item.QuestionID" name="radio_@item.QuestionID" value="chk_2" />
+                                    <label for="chk_2_@item.QuestionID" style="font-weight:normal">@item.Option2</label>
+                                </li>
+                                <li>
+                                    <input type="radio" id="chk_3_@item.QuestionID" name="radio_@item.QuestionID" value="chk_3" />
+                                    <label for="chk_3_@item.QuestionID" style="font-weight:normal">@item.Option3</label>
+                                </li>
+                                <li>
+                                    <input type="radio" id="chk_4_@item.QuestionID" name="radio_@item.QuestionID" value="chk_4" />
+                                    <label for="chk_4_@item.QuestionID" style="font-weight:normal">@item.Option4</label>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </fieldset>
+
+        @if (Model.Count() > 0)
+        {
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>
+        </div>
+        }
+        else
+        {
+            <div class="bg-info" style="padding:20px;">
+                <b>Today's Quiz will be start at 8:30 PM</b>                
+            </div>
+
+        }
+    </div>
+}

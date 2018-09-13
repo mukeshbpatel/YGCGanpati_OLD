@@ -25,12 +25,25 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="@Url.Action("Index", "Home")"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                    <li><a href="@Url.Action("Index", "Quiz")"><span class="fa fa-question"></span> Quiz</a></li>
                     <li><a href="@Url.Action("Index", "Event")"><span class="glyphicon glyphicon-calendar"></span> Events</a></li>
-                    <li><a href="@Url.Action("Index","Collection")"><span class="glyphicon glyphicon-check"></span> Collection</a></li>
-                    <li><a href="@Url.Action("Index","Expense")"><span class="glyphicon glyphicon-share"></span> Expense</a></li>
-                    <li><a href="@Url.Action("Index","Sponser")"><span class="glyphicon glyphicon-piggy-bank"></span> Sponser</a></li>
-                    <li><a href="@Url.Action("Users","Manage")"><span class="glyphicon glyphicon-user"></span> Members</a></li>
-                    <li><a href="@Url.Action("App","Download")"><span class="glyphicon glyphicon glyphicon-phone"></span> App</a></li>
+                   @if (Request.IsAuthenticated)
+                   {
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <span class="fa fa-bank"></span> Accounts
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="@Url.Action("Balance", "Home")"><span class="fa fa-bank"></span> Balance Sheet</a></li>
+                            <li><a href="@Url.Action("Index", "Collection")"><span class="glyphicon glyphicon-check"></span> Collection</a></li>
+                            <li><a href="@Url.Action("Index", "Expense")"><span class="glyphicon glyphicon-share"></span> Expense</a></li>
+                            <li><a href="@Url.Action("Index", "Sponser")"><span class="glyphicon glyphicon-piggy-bank"></span> Sponser</a></li>
+                        </ul>
+                    </li>                                        
+                    <li><a href="@Url.Action("Users", "Manage")"><span class="glyphicon glyphicon-user"></span> Members</a></li>                    
+                   }
+                    <li><a href="@Url.Action("App", "Download")"><span class="glyphicon glyphicon glyphicon-phone"></span> App</a></li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

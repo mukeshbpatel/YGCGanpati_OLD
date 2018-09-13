@@ -1,0 +1,50 @@
+﻿@model IEnumerable<YGCGanpati.Models.UserWinner>
+@using YGCGanpati.Models;
+@{
+    ViewBag.Title = "Quiz Result";
+}
+
+<div style="margin:10px 0px 20px 5px;">
+    <div class="pull-left" style="font-weight:bold; font-size:16px;">@ViewBag.Title</div>
+    <div class="pull-right">
+        <a href="@Url.Action("Index")"><i class="fa fa-question-square"></i> Play</a>
+    </div>
+</div>
+<br />
+    <table class="table table-condensed">
+        <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th  style="text-align:right">Points</th>
+            <th  style="text-align:right">Time</th>
+        </tr>
+        @{ 
+            int i = 0;
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                @{
+                    i = i + 1;
+                }
+                <td>@i</td>
+                <td>@item.Name</td>                
+                <td style="text-align:right">@item.Points</td>
+                <td style="text-align:right">@Common.SecondsToTime(item.TimeTaken)</td>
+            </tr>
+        }
+    </table>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script>
+    function toggle(a) {        
+        var ele = document.getElementById(a);
+        if (ele.style.display === 'none') {
+            ele.style.display = 'block';
+        }
+        else {
+            ele.style.display = 'none';
+        }
+    }
+</script>

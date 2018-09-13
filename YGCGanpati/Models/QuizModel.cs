@@ -78,4 +78,12 @@ namespace YGCGanpati.Models
         public string UserProfile_ID { get; set; }
     }
 
+    public class UserWinner
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public int Points { get; set; }
+        public Int64 TimeTaken { get; set; }
+    }
+
 }

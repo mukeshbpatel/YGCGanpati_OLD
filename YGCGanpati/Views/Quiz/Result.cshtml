@@ -1,0 +1,105 @@
+﻿@model IEnumerable<YGCGanpati.Models.UserAnswer>
+
+@{
+    ViewBag.Title = "Quiz Result";
+}
+
+<div style="margin:10px 0px 20px 5px;">
+    <div class="pull-left" style="font-weight:bold; font-size:16px;">@ViewBag.Title</div>
+    <div class="pull-right">
+        <a href="@Url.Action("Winner")"><i class="fa fa-gift"></i> Winner</a>
+    </div>
+</div>
+@{
+    DateTime dt = DateTime.MinValue;
+}
+<br />
+    <table class="table table-condensed">
+        <tr>
+            <th>Question</th>
+            <th>Point</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            @*if (item.DisplayDate != dt)
+            {
+                <tr>
+                    <td style="width:100px;">
+                        @if (item.Answers != null)
+                        {
+                            <a href="javascript:;"><span class="glyphicon glyphicon-calendar"></span> Date: @item.DisplayDate.ToShortDateString()</a>
+                        }
+                        else
+                        {
+                            <a href="javascript:;"><span class="glyphicon glyphicon-calendar"></span> Date: @item.DisplayDate.ToShortDateString()</a>
+                        }
+
+                </tr>
+                dt = item.DisplayDate;
+            }*@
+            <tr>
+                <td>
+                    <a href="javascript:" onclick="toggle('q_@item.QuestionID');">@item.Question</a>
+                    <div style="display:none;" id="q_@item.QuestionID">
+                        <div style="margin:5px;">
+                            Correct Answer : 
+                            @if (item.Answer == 1)
+                            {
+                               @item.Option1
+                            }
+                            else if (item.Answer == 2)
+                            {
+                                @item.Option2
+                            }
+                            else if (item.Answer == 3)
+                            {
+                                @item.Option3
+                            }
+                            else if (item.Answer == 4)
+                            {
+                                @item.Option4
+                            }
+                        </div>
+                        <div style="margin:5px;">
+                            Your Answer : 
+                            @if (item.Answers == 1)
+                            {
+                                @item.Option1
+                            }
+                            else if (item.Answers == 2)
+                            {
+                                @item.Option2
+                            }
+                            else if (item.Answers == 3)
+                            {
+                                @item.Option3
+                            }
+                            else if (item.Answers == 4)
+                            {
+                                @item.Option4
+                            }
+                        </div>
+                    </div>
+                </td>
+                <td style="text-align:right">@Html.DisplayFor(modelItem=>item.Points)</td>
+            </tr>
+        }
+        <tr>
+            <th>Total</th>
+            <th style="text-align:right">@Model.Sum(s=>s.Points)</th>
+        </tr>
+    </table>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script>
+    function toggle(a) {        
+        var ele = document.getElementById(a);
+        if (ele.style.display === 'none') {
+            ele.style.display = 'block';
+        }
+        else {
+            ele.style.display = 'none';
+        }
+    }
+</script>
