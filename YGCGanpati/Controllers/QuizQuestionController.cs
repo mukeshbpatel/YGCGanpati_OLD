@@ -18,7 +18,7 @@ namespace YGCGanpati.Controllers
         // GET: QuizQuestion
         public ActionResult Index()
         {
-            return View(db.QuizQuestions.ToList());
+            return View(db.QuizQuestions.OrderBy(o=>o.DisplayDate).ToList());
         }
 
         // GET: QuizQuestion/Details/5

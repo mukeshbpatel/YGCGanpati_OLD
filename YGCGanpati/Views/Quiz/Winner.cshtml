@@ -28,12 +28,20 @@
                     i = i + 1;
                 }
                 <td>@i</td>
-                <td>@item.Name</td>                
-                <td style="text-align:right">@item.Points</td>
+                <td><a href="@Url.Action("Result", new { id = item.Id })">@item.Name (@item.FlatNo)</a></td>                
+                <td style="text-align:right"><a href="@Url.Action("Result", new { id = item.Id })">@item.Points</a></td>
                 <td style="text-align:right">@Common.SecondsToTime(item.TimeTaken)</td>
             </tr>
         }
     </table>
+@if (Model.Count() == 0)
+{
+    <div class="bg-info" style="padding:20px;">
+        <b>Quiz winner will be announced soon</b>
+    </div>
+}
+
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

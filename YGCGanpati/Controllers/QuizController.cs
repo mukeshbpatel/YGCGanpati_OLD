@@ -54,23 +54,28 @@ namespace YGCGanpati.Controllers
         }
 
 
-        public ActionResult Result()
+        public ActionResult Result(string id)
         {
-            string sql = "select quizquestions.QuestionID,Question,ImgURL,Option1,Option2,Option3,Option4,quizquestions.Answer,DisplayDate,AnswerID,quizanswers.Answer Answers,AnswerDate,case WHEN AnswerID IS NULL THEN 0 WHEN quizquestions.Answer = quizanswers.Answer THEN 2 ELSE -1 END Points,TIME_TO_SEC(TIMEDIFF(DisplayDate, AnswerDate)) TimeTaken,UserProfile_ID from quizquestions INNER JOIN quizanswers on quizquestions.QuestionID = quizanswers.QuestionID and quizanswers.UserProfile_ID='" + User.Identity.GetUserId() + "' where DisplayDate <= NOW() ORDER BY DisplayDate";
+            string userid = User.Identity.GetUserId();
+            if(!string.IsNullOrEmpty(id))
+            {
+                userid = id;
+            }
+            string sql = "select quizquestions.QuestionID,Question,ImgURL,Option1,Option2,Option3,Option4,quizquestions.Answer,DisplayDate,AnswerID,quizanswers.Answer Answers,AnswerDate,case WHEN AnswerID IS NULL THEN 0 WHEN quizquestions.Answer = quizanswers.Answer THEN 2 ELSE -1 END Points,TIME_TO_SEC(TIMEDIFF(DisplayDate, AnswerDate)) TimeTaken,UserProfile_ID from quizquestions INNER JOIN quizanswers on quizquestions.QuestionID = quizanswers.QuestionID and quizanswers.UserProfile_ID='" + userid + "' where DisplayDate <= NOW() ORDER BY DisplayDate";
             var QList = db.Database.SqlQuery<UserAnswer>(sql).ToList();
             return View(QList);
         }
 
         public ActionResult Winner()
         {
-            string sql = @"SELECT Id,Name,SUM(Points) Points,SUM(TimeTaken) TimeTaken
+            string sql = @"SELECT Id,Name,FlatNo,SUM(Points) Points,AVG(TimeTaken) TimeTaken
                             FROM (
                             select 
-                            aspnetusers.Id,aspnetusers.Name,
+                            aspnetusers.Id,aspnetusers.Name,aspnetusers.FlatNo,
                             case WHEN AnswerID IS NULL THEN 0 WHEN quizquestions.Answer = quizanswers.Answer THEN 2 ELSE -1 END Points,TIME_TO_SEC(TIMEDIFF(AnswerDate,DisplayDate)) TimeTaken
                             from quizquestions INNER JOIN quizanswers on quizquestions.QuestionID = quizanswers.QuestionID
                             INNER JOIN aspnetusers ON aspnetusers.Id = quizanswers.UserProfile_Id) TBL
-                            GROUP BY Id,Name
+                            GROUP BY Id,Name,FlatNo
                             ORDER By Points desc, TimeTaken";
             var QList = db.Database.SqlQuery<UserWinner>(sql).ToList();
             return View(QList);
