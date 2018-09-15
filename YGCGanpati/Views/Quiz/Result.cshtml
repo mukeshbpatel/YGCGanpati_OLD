@@ -39,7 +39,8 @@
             }*@
             <tr>
                 <td>
-                    <a href="javascript:" onclick="toggle('q_@item.QuestionID');">@item.Question</a>
+                    @*<a href="javascript:" onclick="toggle('q_@item.QuestionID');">@item.Question</a>*@
+                    @item.Question
                     <div style="display:none;" id="q_@item.QuestionID">
                         <div style="margin:5px;">
                             Correct Answer : 
